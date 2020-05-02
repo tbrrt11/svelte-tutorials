@@ -1,30 +1,42 @@
 <script>
-	export let name;
+	import Card from './Card.svelte';
+	let query = "";
+	let result;
+
+	async function getResult() {
+		let response = await fetch(`http://numbersapi.com/${query}`);
+		let text = await response.text();
+		let data = text;
+		return data;
+	}
+
+	function submitHandler(e) {
+		result = getResult();
+	}
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+<div class="container mt-5">
+	<div class="row">
+		<div class="col-md"></div>
+		<div class="col-md-8 text-center">
+			<h1 class="display-4">Random Number Facts</h1>
+			<form class="form-inline" on:submit|preventDefault={submitHandler}>
+				<input type="number" class="w-75 form-control" bind:value={query}>
+				<button class="w-25 btn btn-dark">Submit</button>
+			</form>
 
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
+			{#if result === undefined}
+				<p></p>
+			{:else}
+				{#await result}
+					<p>Loading...</p>
+				{:then value}
+					<Card data={value} />
+				{:catch error}
+					<Card data={error.message} />
+				{/await}
+			{/if}
+		</div>
+		<div class="col-md"></div>
+	</div>
+</div>
