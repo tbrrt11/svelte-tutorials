@@ -1,24 +1,35 @@
 <script>
-	import Thing from './Thing.svelte';
+	let promise = getRandomNumber();
 
-	let things = [
-		{ id: 1, color: '#0d0887' },
-		{ id: 2, color: '#6a00a8' },
-		{ id: 3, color: '#b12a90' },
-		{ id: 4, color: '#e16462' },
-		{ id: 5, color: '#fca636' }
-	];
+	async function getRandomNumber() {
+		const res = await fetch('https://www.random.org/integers/?num=1&min=1&max=10000000&col=1&base=10&format=plain&rnd=new');
+		const text = await res.text();
+
+		if (res.ok) {
+			return text;
+		} else {
+			throw new Error(text);
+		}
+
+	}
 
 	function handleClick() {
-		things = things.slice(1);
-        console.log("handleClick -> things", things)
+		promise = getRandomNumber();
 	}
 </script>
 
 <button on:click={handleClick}>
-	Remove first thing
+	generate random number
 </button>
 
-{#each things as thing (thing.id)}
-	<Thing current={thing.color}/>
-{/each}
+{#await promise}
+	<p>...waiting</p>
+{:then number}
+	<p>The number is {number}</p>
+{:catch error}
+	<p style="color: red">{error.message}</p>
+{/await}
+
+{#await promise then value}
+	<p>the value is {value}</p>
+{/await}
