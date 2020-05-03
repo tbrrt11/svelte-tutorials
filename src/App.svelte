@@ -1,17 +1,24 @@
 <script>
-	let cats = [
-		{ id: 'J---aiyznGQ', name: 'Keyboard Cat' },
-		{ id: 'z_AbfPXTKms', name: 'Maru' },
-		{ id: 'OUtn3pvWmpg', name: 'Henri The Existential Cat' }
+	import Thing from './Thing.svelte';
+
+	let things = [
+		{ id: 1, color: '#0d0887' },
+		{ id: 2, color: '#6a00a8' },
+		{ id: 3, color: '#b12a90' },
+		{ id: 4, color: '#e16462' },
+		{ id: 5, color: '#fca636' }
 	];
+
+	function handleClick() {
+		things = things.slice(1);
+        console.log("handleClick -> things", things)
+	}
 </script>
 
-<h1>The Famous Cats of YouTube</h1>
+<button on:click={handleClick}>
+	Remove first thing
+</button>
 
-<ul>
-	{#each cats as { id, name }, i}
-		<li><a target="_blank" href="https://www.youtube.com/watch?v={id}">
-			{i + 1}: {name}
-		</a></li>
-	{/each}
-</ul>
+{#each things as thing (thing.id)}
+	<Thing current={thing.color}/>
+{/each}
