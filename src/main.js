@@ -1,6 +1,6 @@
-import ZdogSimple from './ZdogSimple.svelte';
+import AnimeSimple from './AnimeSimple.svelte';
 
-const app = new ZdogSimple({
+const app = new AnimeSimple({
 	target: document.body,
 });
 
