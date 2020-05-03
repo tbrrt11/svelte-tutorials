@@ -1,35 +1,16 @@
 <script>
-	let promise = getRandomNumber();
+	let m = { x: 0, y: 0 };
 
-	async function getRandomNumber() {
-		const res = await fetch('https://www.random.org/integers/?num=1&min=1&max=10000000&col=1&base=10&format=plain&rnd=new');
-		const text = await res.text();
-
-		if (res.ok) {
-			return text;
-		} else {
-			throw new Error(text);
-		}
-
-	}
-
-	function handleClick() {
-		promise = getRandomNumber();
+	function handleMousemove(event) {
+		m.x = event.clientX;
+		m.y = event.clientY;
 	}
 </script>
 
-<button on:click={handleClick}>
-	generate random number
-</button>
+<div on:mousemove={handleMousemove}>
+	The mouse is {m.x} x {m.y}
+</div>
 
-{#await promise}
-	<p>...waiting</p>
-{:then number}
-	<p>The number is {number}</p>
-{:catch error}
-	<p style="color: red">{error.message}</p>
-{/await}
-
-{#await promise then value}
-	<p>the value is {value}</p>
-{/await}
+<style>
+	div { width: 100%; height: 100% }	
+</style>
