@@ -1,6 +1,9 @@
-<script>
-	let src = 'tutorial/image.gif';
-	let name = 'man';
-</script>
+<style>
+	p {
+		color: purple;
+		font-family: 'Comic Sans MS', cursive;
+		font-size: 2em;
+	}
+</style>
 
-<img {src} alt="A {name} dances.">
+<p>This is a paragraph.</p>
