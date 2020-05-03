@@ -7,38 +7,45 @@
 	onMount(async () => {
 		illo = new Zdog.Illustration({
 			element: '.zdog-canvas',
-			rotate: {
-				y: 0.03,
-				x: 0
-			}
+			zoom: 1,
+			dragRotate: true
 		});
 
+		new Zdog.Shape({
+			addTo: illo,
+			path: [ { y: -3 }, { y: 3 } ],
+			stroke: 8,
+		});
+
+		// patty
 		new Zdog.Ellipse({
 			addTo: illo,
-			diameter: 80,
-			stroke: 20,
-			color: '#636'
+			diameter: 72,
+			stroke: 28,
+			color: '#322'
 		});
+
 		illo.updateRenderGraph();
-		animate()
+		animate();
 	});
 
 	const animate = () => {
-		illo.rotate.y += 0.03;
-		illo.rotate.x += 0.03;
 		illo.updateRenderGraph();
 		requestAnimationFrame(animate);
-	};
+	}
 
 </script>
 
 <main>
 	<svg class="zdog-canvas" height="250" width="250"></svg>
-	<button on:click={animate}>Activate</button>
 </main>
 
 <style>
 	.zdog-canvas {
 		background-color: #ffddfd;
+	}
+
+	.zdog-canvas:hover {
+		cursor: pointer;
 	}
 </style>
