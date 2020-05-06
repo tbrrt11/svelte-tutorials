@@ -1,19 +1,18 @@
 <script>
-    import { onMount } from 'svelte';
     import Anime from 'animejs/lib/anime.es.js';
 
-    onMount(async () => {
+    const mount = () => {
         Anime({
             targets: 'div',
             translateX: 250,
             backgroundColor: '#000',
             duration: 3000
         });
-    });
+    };
 
 </script>
 
-<div>
+<div use:mount>
 
 </div>
 
