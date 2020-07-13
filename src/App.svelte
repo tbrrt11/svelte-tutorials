@@ -1,6 +1,7 @@
 <script>
     import { quintOut } from 'svelte/easing';
     import { crossfade } from 'svelte/transition';
+    import { flip } from 'svelte/animate';
 
     const [send, receive] = crossfade({
         duration: d => Math.sqrt(d * 200),
@@ -64,6 +65,7 @@
             <label
                 in:receive="{{key: todo.id}}"
                 out:send="{{key: todo.id}}"
+                animate:flip="{{duration: 200}}"
             >
                 <input type=checkbox on:change={() => mark(todo, true)}>
                 {todo.description}
@@ -79,6 +81,7 @@
                 class="done"
                 in:receive="{{key: todo.id}}"
                 out:send="{{key: todo.id}}"
+                animate:flip="{{duration: 200}}"
             >
                 <input type=checkbox on:change={() => mark(todo, false)}>
                 {todo.description}
