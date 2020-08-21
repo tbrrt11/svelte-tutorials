@@ -2,16 +2,16 @@
     import { onMount, setContext } from 'svelte';
     import { mapbox, key } from './mapbox.js';
 
+    setContext(key, {
+        getMap: () => map
+    });
+
     export let lat;
     export let lon;
     export let zoom;
 
     let container;
     let map;
-
-    setContext(key, {
-        getMap: () => map
-    });
 
     onMount(() => {
         const link = document.createElement('link');
